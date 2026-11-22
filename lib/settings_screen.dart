@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:traccar_client/main.dart';
-import 'package:traccar_client/password_service.dart';
-import 'package:traccar_client/qr_code_screen.dart';
+import 'package:trackon_client/main.dart';
+import 'package:trackon_client/password_service.dart';
+import 'package:trackon_client/qr_code_screen.dart';
 
 import 'geolocation_service.dart';
 import 'l10n/app_localizations.dart';
@@ -179,7 +180,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _buildListTile(AppLocalizations.of(context)!.urlLabel, Preferences.url, false),
           _buildAccuracyListTile(),
           _buildListTile(AppLocalizations.of(context)!.distanceLabel, Preferences.distance, true),
-          if (isHighestAccuracy || Platform.isAndroid && distance == 0)
+          if (isHighestAccuracy ||
+              !kIsWeb && Platform.isAndroid && distance == 0)
             _buildListTile(AppLocalizations.of(context)!.intervalLabel, Preferences.interval, true),
           if (isHighestAccuracy)
             _buildListTile(AppLocalizations.of(context)!.angleLabel, Preferences.angle, true),
@@ -201,7 +203,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
-          if (advanced && Platform.isAndroid)
+          if (advanced && !kIsWeb && Platform.isAndroid)
             SwitchListTile(
               title: Text(AppLocalizations.of(context)!.wakelockLabel),
               value: Preferences.instance.getBool(Preferences.wakelock) ?? false,
@@ -221,7 +223,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {});
               },
             ),
-          if (advanced && Platform.isAndroid)
+          if (advanced && !kIsWeb && Platform.isAndroid)
             SwitchListTile(
               title: Text(AppLocalizations.of(context)!.preferPlatformProvidersLabel),
               value: Preferences.instance.getBool(Preferences.preferPlatformProviders) ?? false,

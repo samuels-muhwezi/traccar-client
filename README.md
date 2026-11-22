@@ -1,24 +1,22 @@
-# [Traccar Client app](https://www.traccar.org/client)
-
-[![Get it on Google Play](https://www.tananaev.com/badges/google-play.svg)](https://play.google.com/store/apps/details?id=org.traccar.client) [![Download on the App Store](https://www.tananaev.com/badges/app-store.svg)](https://itunes.apple.com/app/traccar-client/id843156974)
+# Trackon Client
 
 ## Overview
 
-Traccar Client is a GPS tracking app for Android and iOS. It runs in the background and sends location updates to your own server running [Traccar](https://github.com/traccar/traccar), the open-source GPS tracking platform.
+Trackon Client is a GPS tracking app for Android and iOS. It runs in the background and sends location updates to your Trackon server. The server is compatible with the Traccar protocol and API.
 
 - **Real-time Tracking**: See your device’s location on your private server in real time.
 - **Open-Source**: 100% free and open-source, with no ads or tracking.
 - **Customizable**: Configure update intervals, accuracy, and data usage to fit your needs.
 - **Privacy First**: Your location data is sent only to your chosen server—never to third parties.
-- **Easy Integration**: Designed to work seamlessly with the Traccar server and many third-party GPS tracking platforms.
+- **Easy Integration**: Designed to work with Trackon and compatible GPS tracking servers.
 
 Just enter your server address, grant location permissions, and the app will automatically send periodic location reports in the background.
 
-Don't have a Traccar server yet? [Try the live demo](https://www.traccar.org/demo-server/) or see the [installation guides](https://www.traccar.org/install-vps/) to set up your own for free.
+Set the address of your Trackon server in the app settings.
 
 | Client App |
 |---|
-| <img src=".github/screenshot.png" alt="Traccar Client app" width="200"> |
+| <img src=".github/screenshot.png" alt="Trackon Client app" width="200"> |
 
 ## Build
 
@@ -35,4 +33,4 @@ flutter run
 
 ## License
 
-Apache License, Version 2.0. See [LICENSE.txt](https://github.com/traccar/traccar-client/blob/master/LICENSE.txt) for details.
+Apache License, Version 2.0. See [LICENSE.txt](LICENSE.txt) for details. Trackon Client is derived from the Traccar Client project.

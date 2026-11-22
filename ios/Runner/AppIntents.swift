@@ -3,7 +3,7 @@ import TraccarClientSDK
 
 private func checkPassword() throws {
     guard UserDefaults.standard.string(forKey: "password") == nil else {
-        throw NSError(domain: "TraccarClient", code: 1, userInfo: [NSLocalizedDescriptionKey: "Use app to change tracking"])
+        throw NSError(domain: "TrackonClient", code: 1, userInfo: [NSLocalizedDescriptionKey: "Use app to change tracking"])
     }
 }
 
@@ -32,7 +32,7 @@ struct StopTrackingIntent: AppIntent {
 }
 
 @available(iOS 16.0, *)
-struct TraccarShortcuts: AppShortcutsProvider {
+struct TrackonShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: StartTrackingIntent(),

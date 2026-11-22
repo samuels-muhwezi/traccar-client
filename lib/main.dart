@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:rate_my_app/rate_my_app.dart';
-import 'package:traccar_client/password_service.dart';
-import 'package:traccar_client/quick_actions.dart';
+import 'package:trackon_client/password_service.dart';
+import 'package:trackon_client/quick_actions.dart';
 
 import 'configuration_service.dart';
 import 'geolocation_service.dart';

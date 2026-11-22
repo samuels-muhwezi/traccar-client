@@ -1,6 +1,6 @@
 {
-    "name": "traccar_client",
-    "short_name": "traccar_client",
+    "name": "Trackon Client",
+    "short_name": "Trackon",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

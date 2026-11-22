@@ -1,11 +1,12 @@
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:traccar_client/main.dart';
-import 'package:traccar_client/password_service.dart';
-import 'package:traccar_client/preferences.dart';
+import 'package:trackon_client/main.dart';
+import 'package:trackon_client/password_service.dart';
+import 'package:trackon_client/preferences.dart';
 
 import 'geolocation_service.dart';
 import 'l10n/app_localizations.dart';
@@ -69,7 +70,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               title: Text(AppLocalizations.of(context)!.idLabel),
               subtitle: Text(Preferences.instance.getString(Preferences.id) ?? ''),
             ),
-            if (Platform.isAndroid) ...[
+            if (!kIsWeb && Platform.isAndroid) ...[
               Text(
                 AppLocalizations.of(context)!.disclosureMessage,
                 style: Theme.of(context).textTheme.bodySmall,
@@ -185,7 +186,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                 ),
               ],
             ),
-          ]
+          ],
         ),
       ),
     );
@@ -195,7 +196,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Traccar Client'),
+        title: const Text('Trackon Client'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

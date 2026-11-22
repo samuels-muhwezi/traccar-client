@@ -1,7 +1,7 @@
 import 'dart:io';
 
-const appName = 'ACME Client';
-const packageId = 'com.acme.client';
+const appName = 'Trackon Client';
+const packageId = 'com.samuelsmuhwezi.trackon.client';
 const version = '1.0.0+1';
 const url = "https://example.com";
 final iconPath = '${Platform.environment['HOME']}/Downloads/icon.png';
@@ -60,8 +60,14 @@ Future<void> _updatePackageId(String id) async {
   );
 
   await _replaceInFile(
+    'android/app/build.gradle.kts',
+    RegExp(r'namespace = ".*?"'),
+    'namespace = "$id"',
+  );
+
+  await _replaceInFile(
     'ios/Runner.xcodeproj/project.pbxproj',
-    RegExp(r'PRODUCT_BUNDLE_IDENTIFIER = org\.traccar.*?;'),
+    RegExp(r'PRODUCT_BUNDLE_IDENTIFIER = com\.samuelsmuhwezi\.trackon\.client;'),
     'PRODUCT_BUNDLE_IDENTIFIER = $id;',
   );
 }

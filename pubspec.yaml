@@ -1,5 +1,5 @@
-name: traccar_client
-description: "Traccar Client"
+name: trackon_client
+description: "Trackon Client"
 publish_to: 'none'
 version: 10.2.4+168
 

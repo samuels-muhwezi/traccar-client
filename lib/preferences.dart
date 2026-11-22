@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_android/shared_preferences_android.dart';
 import 'package:traccar_client_sdk/traccar_client_sdk.dart';
@@ -28,8 +29,9 @@ class Preferences {
   }
 
   static Future<void> _createInstance() async {
+    final isAndroid = !kIsWeb && Platform.isAndroid;
     instance = await SharedPreferencesWithCache.create(
-      sharedPreferencesOptions: Platform.isAndroid
+      sharedPreferencesOptions: isAndroid
           ? SharedPreferencesAsyncAndroidOptions(backend: SharedPreferencesAndroidBackendLibrary.SharedPreferences)
           : SharedPreferencesOptions(),
       cacheOptions: SharedPreferencesWithCacheOptions(
@@ -38,7 +40,7 @@ class Preferences {
         },
       ),
     );
-    if (Platform.isAndroid) {
+    if (isAndroid) {
       for (final key in {interval, distance, angle, heartbeat}) {
         if (instance.get(key) is String) {
           await instance.setInt(key, int.tryParse(instance.getString(key) ?? '') ?? 0);
