@@ -22,7 +22,7 @@ Don't have a Traccar server yet? [Try the live demo](https://www.traccar.org/dem
 
 ## Build
 
-Standard Flutter project:
+Requires Flutter 3.50.1 or later (Dart 3.13 or later).
 
 ```shell
 flutter pub get

@@ -17,7 +17,6 @@ Future<void> main() async {
   await _updateVersion(version);
   await _updateUrl(url);
   await _createKeystore();
-  stdout.writeln('Please run `flutterfire configure` now.');
 }
 
 Future<void> _generateIcons(String icon) async {
@@ -37,12 +36,6 @@ flutter_launcher_icons:
 ''');
   await _run('flutter', ['pub', 'run', 'flutter_launcher_icons']);
   await f.delete();
-
-  await _replaceInFile(
-    'android/app/src/main/AndroidManifest.xml',
-    RegExp(r'\s*<meta-data\s+android:name="com\.google\.firebase\.messaging\.default_notification_icon"[\s\S]*?/>', multiLine: true),
-    '',
-  );
 }
 
 Future<void> _updateTitle(String name) async {
@@ -93,19 +86,28 @@ Future<void> _createKeystore() async {
   final args = [
     '-genkeypair',
     '-v',
-    '-keystore', keystoreFilePath,
-    '-alias', keystoreAlias,
-    '-keyalg', 'RSA',
-    '-keysize', '2048',
-    '-validity', '10000',
-    '-storepass', keystorePassword,
-    '-keypass', keystorePassword,
-    '-dname', 'CN=Brand, OU=Dev, O=Company, L=City, S=State, C=US',
+    '-keystore',
+    keystoreFilePath,
+    '-alias',
+    keystoreAlias,
+    '-keyalg',
+    'RSA',
+    '-keysize',
+    '2048',
+    '-validity',
+    '10000',
+    '-storepass',
+    keystorePassword,
+    '-keypass',
+    keystorePassword,
+    '-dname',
+    'CN=Brand, OU=Dev, O=Company, L=City, S=State, C=US',
   ];
   await _run('keytool', args);
 
   final file = File('android/key.properties');
-  final content = '''
+  final content =
+      '''
 storePassword=$keystorePassword
 keyPassword=$keystorePassword
 keyAlias=$keystoreAlias
@@ -126,7 +128,11 @@ Future<File> _writeTempYaml(String name, String content) async {
   return file;
 }
 
-Future<void> _replaceInFile(String path, RegExp pattern, String replacement) async {
+Future<void> _replaceInFile(
+  String path,
+  RegExp pattern,
+  String replacement,
+) async {
   final file = File(path);
   if (!await file.exists()) return;
   final text = await file.readAsString();

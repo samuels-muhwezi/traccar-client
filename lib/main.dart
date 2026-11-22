@@ -1,14 +1,8 @@
-import 'dart:async';
-import 'dart:ui' show PlatformDispatcher;
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app_links/app_links.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:traccar_client/password_service.dart';
-import 'package:traccar_client/push_service.dart';
 import 'package:traccar_client/quick_actions.dart';
 
 import 'configuration_service.dart';
@@ -24,16 +18,9 @@ final mainScreenKey = GlobalKey<MainScreenState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
   await Preferences.init();
   await GeolocationService.tracker.init(Preferences.buildConfig());
   await PasswordService.migrate();
-  await PushService.init();
   await ManagedConfigService.init();
   runApp(const MainApp());
 }
@@ -55,7 +42,9 @@ class _MainAppState extends State<MainApp> {
       await _initLinks();
       await rateMyApp.init();
       final dialogContext = navigatorKey.currentContext;
-      if (dialogContext != null && dialogContext.mounted && rateMyApp.shouldOpenDialog) {
+      if (dialogContext != null &&
+          dialogContext.mounted &&
+          rateMyApp.shouldOpenDialog) {
         await rateMyApp.showRateDialog(dialogContext);
       }
     });
@@ -69,7 +58,8 @@ class _MainAppState extends State<MainApp> {
     final context = navigatorKey.currentState?.overlay?.context;
     if (Preferences.instance.getString(Preferences.password) != null) {
       if (context == null || !context.mounted) return;
-      if (!await PasswordService.authenticate(context) || !context.mounted) return;
+      if (!await PasswordService.authenticate(context) || !context.mounted)
+        return;
     }
     if (uri.host == 'action') {
       try {
