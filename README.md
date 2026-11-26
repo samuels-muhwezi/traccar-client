@@ -12,7 +12,9 @@ Trackon Client is a GPS tracking app for Android and iOS. It runs in the backgro
 
 Just enter your server address, grant location permissions, and the app will automatically send periodic location reports in the background.
 
-Set the address of your Trackon server in the app settings.
+By default, the client sends GPS updates to `https://trackon.imaxprojects.com/`.
+TrackOn forwards client updates internally to the OsmAnd protocol. To use a
+different server, change the address in the app settings.
 
 | Client App |
 |---|

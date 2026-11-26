@@ -12,6 +12,11 @@ class Preferences {
 
   static const String id = 'id';
   static const String url = 'url';
+  static const String defaultServerUrl = 'https://trackon.imaxprojects.com/';
+  static const Set<String> previousDefaultServerUrls = {
+    'http://demo.traccar.org:5055',
+    'http://trackon.imaxprojects.com:5055',
+  };
   static const String accuracy = 'accuracy';
   static const String distance = 'distance';
   static const String interval = 'interval';
@@ -32,29 +37,50 @@ class Preferences {
     final isAndroid = !kIsWeb && Platform.isAndroid;
     instance = await SharedPreferencesWithCache.create(
       sharedPreferencesOptions: isAndroid
-          ? SharedPreferencesAsyncAndroidOptions(backend: SharedPreferencesAndroidBackendLibrary.SharedPreferences)
+          ? SharedPreferencesAsyncAndroidOptions(
+              backend: SharedPreferencesAndroidBackendLibrary.SharedPreferences,
+            )
           : SharedPreferencesOptions(),
       cacheOptions: SharedPreferencesWithCacheOptions(
         allowList: {
-          id, url, accuracy, distance, interval, angle, heartbeat, buffer, wakelock, stopDetection, preferPlatformProviders, password,
+          id,
+          url,
+          accuracy,
+          distance,
+          interval,
+          angle,
+          heartbeat,
+          buffer,
+          wakelock,
+          stopDetection,
+          preferPlatformProviders,
+          password,
         },
       ),
     );
     if (isAndroid) {
       for (final key in {interval, distance, angle, heartbeat}) {
         if (instance.get(key) is String) {
-          await instance.setInt(key, int.tryParse(instance.getString(key) ?? '') ?? 0);
+          await instance.setInt(
+            key,
+            int.tryParse(instance.getString(key) ?? '') ?? 0,
+          );
         }
       }
     }
     if (instance.getString(id) == null) {
-      await instance.setString(id, (Random().nextInt(90000000) + 10000000).toString());
-      await instance.setString(url, 'http://demo.traccar.org:5055');
+      await instance.setString(
+        id,
+        (Random().nextInt(90000000) + 10000000).toString(),
+      );
+      await instance.setString(url, defaultServerUrl);
       await instance.setString(accuracy, 'medium');
       await instance.setInt(interval, 300);
       await instance.setInt(distance, 75);
       await instance.setBool(buffer, true);
       await instance.setBool(stopDetection, true);
+    } else if (previousDefaultServerUrls.contains(instance.getString(url))) {
+      await instance.setString(url, defaultServerUrl);
     }
   }
 
@@ -77,7 +103,8 @@ class Preferences {
       ),
       wakeLock: instance.getBool(wakelock) ?? false,
       buffer: instance.getBool(buffer) ?? true,
-      preferPlatformProviders: instance.getBool(preferPlatformProviders) ?? false,
+      preferPlatformProviders:
+          instance.getBool(preferPlatformProviders) ?? false,
     );
   }
 }
